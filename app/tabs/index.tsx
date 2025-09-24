@@ -13,7 +13,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
 
 const { height } = Dimensions.get('window');
 
@@ -58,6 +58,7 @@ const breathingExercises: BreathingExercise[] = [
 ];
 
 export default function ChatScreen() {
+  const insets = useSafeAreaInsets();
   const [messages, setMessages] = useState<Message[]>([
     {
       id: '1',
@@ -196,7 +197,7 @@ export default function ChatScreen() {
       <KeyboardAvoidingView
         style={styles.keyboardContainer}
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-        keyboardVerticalOffset={Platform.OS === 'ios' ? 0 : 20}
+        keyboardVerticalOffset={Platform.OS === 'ios' ? 90 : 0}
       >
       {/* Header */}
       <LinearGradient
@@ -266,7 +267,7 @@ export default function ChatScreen() {
       </ScrollView>
 
       {/* Input */}
-      <View style={styles.inputContainer}>
+      <View style={[styles.inputContainer, { paddingBottom: Math.max(insets.bottom, 16) }]}>
         <TextInput
           style={styles.textInput}
           value={inputText}
@@ -468,7 +469,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'flex-end',
     paddingHorizontal: 20,
-    paddingVertical: 16,
+    paddingTop: 16,
     backgroundColor: Colors.dark.surface,
     borderTopWidth: 1,
     borderTopColor: Colors.dark.border,

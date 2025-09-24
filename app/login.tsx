@@ -82,7 +82,7 @@ export default function LoginScreen() {
             <View style={styles.logo}>
               <Text style={styles.logoText}>F</Text>
             </View>
-            <Text style={styles.title}>Felix</Text>
+            <Text style={styles.title}>Feelix</Text>
             <Text style={styles.subtitle}>Your emotional processing companion</Text>
           </View>
 

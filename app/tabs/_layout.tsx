@@ -17,7 +17,7 @@ export default function TabLayout() {
         tabBarStyle: {
           backgroundColor: Colors[colorScheme ?? 'dark'].surface,
           borderTopColor: Colors[colorScheme ?? 'dark'].border,
-          borderTopWidth: 1,
+          borderTopWidth: 0.5,
         },
         headerShown: false,
         tabBarButton: HapticTab,
@@ -26,6 +26,7 @@ export default function TabLayout() {
         name="index"
         options={{
           title: 'Chat',
+          headerShown: false,
           tabBarIcon: ({ color }) => <IconSymbol size={28} name="message.fill" color={color} />,
         }}
       />
@@ -33,6 +34,7 @@ export default function TabLayout() {
         name="resources"
         options={{
           title: 'Resources',
+          headerShown: false,
           tabBarIcon: ({ color }) => <IconSymbol size={28} name="book.fill" color={color} />,
         }}
       />
@@ -40,6 +42,7 @@ export default function TabLayout() {
         name="profile"
         options={{
           title: 'Profile',
+          headerShown: false,
           tabBarIcon: ({ color }) => <IconSymbol size={28} name="person.fill" color={color} />,
         }}
       />
