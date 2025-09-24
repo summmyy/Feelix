@@ -1,29 +1,86 @@
 /**
- * Below are the colors that are used in the app. The colors are defined in the light and dark mode.
- * There are many other ways to style your app. For example, [Nativewind](https://www.nativewind.dev/), [Tamagui](https://tamagui.dev/), [unistyles](https://reactnativeunistyles.vercel.app), etc.
+ * Felix - Emotional Processing App Theme
+ * Glossy black design with white font and accent colors
  */
 
 import { Platform } from 'react-native';
 
-const tintColorLight = '#0a7ea4';
-const tintColorDark = '#fff';
+// Glossy black theme with white font and accent colors
+const primaryAccent = '#FF6B6B'; // Coral red for emotional warmth
+const secondaryAccent = '#4ECDC4'; // Teal for calm and balance
+const tertiaryAccent = '#45B7D1'; // Blue for trust and stability
 
 export const Colors = {
   light: {
-    text: '#11181C',
-    background: '#fff',
-    tint: tintColorLight,
-    icon: '#687076',
-    tabIconDefault: '#687076',
-    tabIconSelected: tintColorLight,
+    text: '#FFFFFF',
+    background: '#0A0A0A',
+    surface: '#1A1A1A',
+    surfaceVariant: '#2A2A2A',
+    tint: primaryAccent,
+    accent: primaryAccent,
+    secondaryAccent: secondaryAccent,
+    tertiaryAccent: tertiaryAccent,
+    icon: '#FFFFFF',
+    tabIconDefault: '#666666',
+    tabIconSelected: primaryAccent,
+    border: '#333333',
+    card: '#1A1A1A',
+    input: '#2A2A2A',
+    placeholder: '#888888',
+    success: '#4CAF50',
+    warning: '#FF9800',
+    error: '#F44336',
+    info: '#2196F3',
   },
   dark: {
-    text: '#ECEDEE',
-    background: '#151718',
-    tint: tintColorDark,
-    icon: '#9BA1A6',
-    tabIconDefault: '#9BA1A6',
-    tabIconSelected: tintColorDark,
+    text: '#FFFFFF',
+    background: '#0A0A0A',
+    surface: '#1A1A1A',
+    surfaceVariant: '#2A2A2A',
+    tint: primaryAccent,
+    accent: primaryAccent,
+    secondaryAccent: secondaryAccent,
+    tertiaryAccent: tertiaryAccent,
+    icon: '#FFFFFF',
+    tabIconDefault: '#666666',
+    tabIconSelected: primaryAccent,
+    border: '#333333',
+    card: '#1A1A1A',
+    input: '#2A2A2A',
+    placeholder: '#888888',
+    success: '#4CAF50',
+    warning: '#FF9800',
+    error: '#F44336',
+    info: '#2196F3',
+  },
+};
+
+// Custom color schemes for user customization
+export const ColorSchemes = {
+  default: {
+    primary: primaryAccent,
+    secondary: secondaryAccent,
+    tertiary: tertiaryAccent,
+  },
+  ocean: {
+    primary: '#4ECDC4',
+    secondary: '#45B7D1',
+    tertiary: '#96CEB4',
+  },
+  sunset: {
+    primary: '#FF6B6B',
+    secondary: '#FFA726',
+    tertiary: '#FF8A65',
+  },
+  forest: {
+    primary: '#66BB6A',
+    secondary: '#81C784',
+    tertiary: '#A5D6A7',
+  },
+  lavender: {
+    primary: '#BA68C8',
+    secondary: '#CE93D8',
+    tertiary: '#E1BEE7',
   },
 };
 

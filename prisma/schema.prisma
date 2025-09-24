@@ -1,0 +1,174 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  name      String?
+  avatar    String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Profile settings
+  preferredColorScheme String  @default("default")
+  notificationsEnabled Boolean @default(true)
+  breathingReminders   Boolean @default(true)
+  journalPrompts       Boolean @default(false)
+
+  // Relationships
+  conversations Conversation[]
+  moodEntries   MoodEntry[]
+  resources     UserResource[]
+  journalEntries JournalEntry[]
+
+  @@map("users")
+}
+
+model Conversation {
+  id        String   @id @default(cuid())
+  title     String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relationships
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  messages Message[]
+
+  @@map("conversations")
+}
+
+model Message {
+  id        String   @id @default(cuid())
+  text      String
+  isUser    Boolean
+  mood      String?
+  createdAt DateTime @default(now())
+
+  // Relationships
+  conversationId String
+  conversation   Conversation @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+
+  @@map("messages")
+}
+
+model MoodEntry {
+  id          String   @id @default(cuid())
+  mood        String
+  intensity   Int      @default(5) // 1-10 scale
+  notes       String?
+  triggers    String[] // Array of trigger descriptions
+  createdAt   DateTime @default(now())
+
+  // Relationships
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("mood_entries")
+}
+
+model Resource {
+  id          String   @id @default(cuid())
+  title       String
+  description String
+  type        ResourceType
+  category    String
+  moodTags    String[] // Array of mood tags this resource helps with
+  url         String?
+  duration    Int?     // in minutes
+  thumbnail   String?
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  // Relationships
+  userResources UserResource[]
+
+  @@map("resources")
+}
+
+model UserResource {
+  id        String   @id @default(cuid())
+  completed Boolean  @default(false)
+  rating    Int?     // 1-5 stars
+  notes     String?
+  completedAt DateTime?
+  createdAt DateTime @default(now())
+
+  // Relationships
+  userId     String
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  resourceId String
+  resource   Resource @relation(fields: [resourceId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, resourceId])
+  @@map("user_resources")
+}
+
+model JournalEntry {
+  id        String   @id @default(cuid())
+  title     String?
+  content   String
+  mood      String?
+  tags      String[]
+  isPrivate Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relationships
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("journal_entries")
+}
+
+model BreathingSession {
+  id          String   @id @default(cuid())
+  exerciseType String
+  duration    Int      // in seconds
+  completed   Boolean  @default(false)
+  notes       String?
+  createdAt   DateTime @default(now())
+
+  // Relationships
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("breathing_sessions")
+}
+
+model UserStats {
+  id                    String   @id @default(cuid())
+  totalSessions         Int      @default(0)
+  currentStreak         Int      @default(0)
+  longestStreak         Int      @default(0)
+  totalBreathingMinutes Int      @default(0)
+  totalJournalEntries   Int      @default(0)
+  lastActivityDate      DateTime?
+  updatedAt             DateTime @updatedAt
+
+  // Relationships
+  userId String @unique
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("user_stats")
+}
+
+enum ResourceType {
+  VIDEO
+  AUDIO
+  ARTICLE
+  EXERCISE
+  MEDITATION
+  JOURNAL_PROMPT
+  BREATHING_EXERCISE
+}
